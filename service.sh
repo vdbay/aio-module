@@ -16,8 +16,9 @@ while true; do
     vIsEnabled=$(getprop vdbay.autocut.enable)                    # true or false
     vBatteryLevel=$(cat /sys/class/power_supply/battery/capacity) # "0-100"
     vChargeStatus=$(cat /sys/class/power_supply/battery/status)   # "Charging" or "Discharging"
+    vLevel=$(getprop vdbay.autocut.level)                         # charging level
 
-    if [ "$vIsEnabled" = "true" ] && [ "$vBatteryLevel" -ge 100 ] && [ "$vChargeStatus" = "Charging" ]; then
+    if [ "$vIsEnabled" = "true" ] && [ "$vBatteryLevel" -ge "$vLevel" ] && [ "$vChargeStatus" = "Charging" ]; then
         vset_charging 0
     fi
 
