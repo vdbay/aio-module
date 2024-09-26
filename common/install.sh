@@ -28,7 +28,8 @@ fi
 
 ui_print "Installing VDBAy AIO app..."
 if pm list packages | grep -q com.vdbay.aioapp; then
-    ui_print "VDBay AIO app already installed."
+    ui_print "VDBay AIO app already installed. Updating..."
+    pm install $MODPATH/aioapp.apk
 else
     pm install $MODPATH/aioapp.apk
     if ! pm list packages | grep -q com.vdbay.aioapp; then
@@ -39,7 +40,8 @@ fi
 
 ui_print "Installing toast app..."
 if pm list packages | grep -q bellavita.toast; then
-    ui_print "Toast app already installed."
+    ui_print "Toast app already installed. Updating..."
+    pm install $MODPATH/toast.apk
 else
     pm install $MODPATH/toast.apk
     if ! pm list packages | grep -q bellavita.toast; then
