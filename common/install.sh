@@ -22,7 +22,7 @@ ui_print " "
 
 # Check compatibility
 VIS_COMPATIBLE=$(wc -c <"$MODPATH/service.sh")
-if [ "$VIS_COMPATIBLE" = "923"]; then
+if [ "$VIS_COMPATIBLE" = "1012"]; then
     abort "Not compatible, can't install. Please ask your maintainer."
 fi
 
