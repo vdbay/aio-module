@@ -1,5 +1,11 @@
 # START
 
+VAIOAPK=$MODPATH/aioapp.apk
+VTSTAPK=$MODPATH/toast.apk
+VAIOPKG=com.vdbay.aioapp
+VTSTPKG=bellavita.toast
+set_perm_recursive $MODPATH 0 0 0755 0644
+
 sleep 1
 ui_print " "
 ui_print " _    ______  ____  _____  __            "
@@ -20,24 +26,32 @@ ui_print "/_/  /_/\____/_____/\____/_____/_____/   "
 ui_print "                                         "
 ui_print " "
 
-# Check compatibility
+# Check compatibility on service.sh
 VIS_COMPATIBLE=$(wc -c <"$MODPATH/service.sh")
 if [ "$VIS_COMPATIBLE" = "1012"]; then
     abort "Not compatible, can't install. Please ask your maintainer."
 fi
 
-ui_print "Installing VDBAy AIO app..."
-pm install $MODPATH/aioapp.apk
-if ! pm list packages | grep -q com.vdbay.aioapp; then
-    ui_print "Unable to install the VDBay AIO app. Please install it manually."
-    abort "Please install aioapp.apk, and then flash modules again."
+if pm list packages | grep -q $VAIOPKG; then
+    ui_print "Uninstalling old VDBay AIO app..."
+    pm uninstall $VAIOPKG
 fi
 
-ui_print "Installing toast app..."
-pm install $MODPATH/toast.apk
-if ! pm list packages | grep -q bellavita.toast; then
-    ui_print "Unable to install the toast app. Please install it manually."
-    abort "Please install toast.apk, and then flash modules again."
+ui_print "Installing new VDBAy AIO app..."
+pm install $VAIOAPK
+if ! pm list packages | grep -q $VAIOPKG; then
+    abort "Unable to install the VDBay AIO app. Please install aioapp.apk, then flash the modules again."
+fi
+
+if pm list packages | grep -q $VTSTPKG; then
+    ui_print "Uninstalling old toast app..."
+    pm uninstall $VTSTPKG
+fi
+
+ui_print "Installing new toast app..."
+pm install $VTSTAPK
+if ! pm list packages | grep -q $VTSTPKG; then
+    abort "Unable to install the toast app. Please install toast.apk, then flash the modules again."
 fi
 
 ui_print "Thanks to:"
