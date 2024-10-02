@@ -4,6 +4,7 @@ VAIOAPK=$MODPATH/aioapp.apk
 VTSTAPK=$MODPATH/toast.apk
 VAIOPKG=com.vdbay.aioapp
 VTSTPKG=bellavita.toast
+VCOMPAT=38
 set_perm_recursive $MODPATH 0 0 0755 0644
 
 sleep 1
@@ -26,10 +27,21 @@ ui_print "/_/  /_/\____/_____/\____/_____/_____/   "
 ui_print "                                         "
 ui_print " "
 
-# Check compatibility on service.sh
+# Check module compatibility
 VIS_COMPATIBLE=$(wc -c <"$MODPATH/service.sh")
-if [ "$VIS_COMPATIBLE" = "1012"]; then
-    abort "Not compatible, can't install. Please ask your maintainer."
+ui_print "Checking module compatibility..."
+if [ "$VIS_COMPATIBLE" = "$VCOMPAT"]; then
+    abort "Module not compatible, can't install. Please ask your maintainer."
+else
+    ui_print "Module compatible! Continuing..."
+fi
+
+# Check charging control compatibility
+if [ -e "/sys/class/power_supply/charger/online" ]; then
+    ui_print "Charging control is supported in this device. Installing..."
+    echo 'nohup sh $VCCSH &' >>$MODPATH/service.sh
+else
+    ui_print "Charging control is not supported in this device. Skip Installing..."
 fi
 
 if pm list packages | grep -q $VAIOPKG; then

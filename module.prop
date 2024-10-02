@@ -1,7 +1,7 @@
 id=VDBayAIOModules
 name=VDBay AIO Modules
-version=v1.0.0
-versionCode=100
+version=v1.1.0
+versionCode=110
 author=VDBay
 description= VDBay All in One Modules for You
 updateJson=https://github.com/vdbay/aio-module/raw/master/update.json

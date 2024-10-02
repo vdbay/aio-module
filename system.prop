@@ -1,2 +1,6 @@
-vdbay.autocut.enable=true
+vdbay.autocut.enable=0
 vdbay.autocut.level=100
+vdbay.game.downscaleFactor=0.7
+vdbay.game.fps=60
+vdbay.game.loadingBoost=28800000
+vdbay.game.useAngle=true
